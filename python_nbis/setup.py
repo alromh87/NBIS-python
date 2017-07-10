@@ -21,7 +21,7 @@ nfiq_module = Extension('_nfiq', ['nfiq.i'], swig_opts=['-I'+NBIS_INCLUDE_DIR],
                       libraries=['nfiq', 'mindtct', 'mlp', 'cblas', 'ioutil', 'util'],
                       )
 setup (name = "pyNBIS",
-       use_scm_version=True,
+#       use_scm_version=True,
        setup_requires=['setuptools_scm'],
 #       version		= '0.1',
        author		= "Alejandro Romero <alromh87@gmail.com>",
