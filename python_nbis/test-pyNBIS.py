@@ -18,7 +18,6 @@ with open(huella_raw, "rb") as image_file:
 #  img.show()
 
   bitrate = 2.25
-  bitrate = 2
   depth = 8
   ppi = 500
   result =  nfiq.comp_nfiq(huella,  w,  h, depth, depth)
