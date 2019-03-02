@@ -1,0 +1,5 @@
+*.o
+*/bin/
+*/lib/
+*/obj/
+python_nbis/build/

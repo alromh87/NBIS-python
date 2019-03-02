@@ -19,6 +19,6 @@ NBIS:
 	@echo $(NBIS_INSTALL_DIR)
 	ls $(NBIS_INSTALL_DIR)
 clean:
-	rm -r *.c *.so *.pyc dist build *.egg-info/
+	rm -r *.c *.so *.pyc dist build *.egg-info/ nfiq.py wsq.py lfs.py bozorth.py
 #//	rm *.py // este no!!!
 
