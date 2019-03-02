@@ -3,3 +3,10 @@
 */lib/
 */obj/
 python_nbis/build/
+python_nbis/dist/
+python_nbis/*_wrap.c
+python_nbis/installedFiles.txt
+python_nbis/*.pyc
+rules.mak
+p_rules.mak
+*egg*

@@ -1,6 +1,7 @@
-/* nfiq.i */
+/* bozorth.i */
 %module bozorth
 %include "typemaps.i"
+%include "bz_comon.i"
 
 %apply int *OUTPUT { int * };
 %apply float *OUTPUT { float * };
@@ -50,23 +51,4 @@
   $result = SWIG_Python_AppendOutput(resultobj, list);
 }
 
-%{
-#include "bozorth.h"
-#undef PARALLEL_SEARCH
-//#define DEBUG 1
-
-int m1_xyt                  = 0;
-
-int max_minutiae            = DEFAULT_BOZORTH_MINUTIAE;
-int min_computable_minutiae = MIN_COMPUTABLE_BOZORTH_MINUTIAE;
-
-int verbose_main      = 0;
-int verbose_load      = 0;
-int verbose_bozorth   = 0;
-int verbose_threshold = 0;
-
-FILE * errorfp            = FPNULL;
-%}
-
 %include "bozorth.h"
-

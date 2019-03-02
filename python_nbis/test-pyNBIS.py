@@ -14,7 +14,7 @@ from subprocess import call
 debug = 1
 
 huella_raw ="fingerprint.raw"
-huella2_raw ="fingerprintYes.raw"
+huella2_raw ="fingerprintNo.raw"
 with open(huella_raw, "rb") as image_file:
   huella = image_file.read()
 
@@ -64,6 +64,7 @@ with open(huella_raw, "rb") as image_file:
     salida = lfs.get_minutiae(huella, w, h, depth, ppi)
     lfs.write_minutiae_XYTQ("out/testMINDTCTpy.xyt", lfs.NIST_INTERNAL_XYT_REP, salida[1], w, h)
     lfs.free_minutiae(salida[1])
+    #TODO: Run OS mintct and compare output
 
 
   else:

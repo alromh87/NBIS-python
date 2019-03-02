@@ -1,5 +1,6 @@
 /* lfs.i */
 %module lfs
+%include "bz_comon.i"
 
 %apply int *OUTPUT { int * };
 %apply float *OUTPUT { float * };
@@ -37,7 +38,7 @@
   $1 = &minutiae;
 }
 %typemap(argout) MINUTIAE ** {
-  printf("\nReturning %d minutia using %d adress space...\n%d\n", (**$1).num, (**$1).alloc, (**$1).num*sizeof(MINUTIAE));
+  printf("\nReturning %d minutia using %d adress space...\n%ld\n", (**$1).num, (**$1).alloc, (**$1).num*sizeof(MINUTIAE));
   $result = SWIG_Python_AppendOutput(resultobj, (*$1));
 //  $result = SWIG_Python_AppendOutput(resultobj, PyString_FromStringAndSize((const char*)(*$1), (**$1).alloc));
 
@@ -77,7 +78,6 @@
   }
 }
 
-
 %typemap(in,numinputs=0) int ** (int *oIntP){
   $1 = &oIntP;
 }
@@ -99,89 +99,7 @@
 }
 
 %typemap(in,numinputs=0) LFSPARMS *{
-  LFSPARMS lfsparms_V2 = {
-   /* Image Controls */
-   PAD_VALUE,
-   JOIN_LINE_RADIUS,
-
-   /* Map Controls */
-   MAP_BLOCKSIZE_V2,
-   MAP_WINDOWSIZE_V2,
-   MAP_WINDOWOFFSET_V2,
-   NUM_DIRECTIONS,
-   START_DIR_ANGLE,
-   RMV_VALID_NBR_MIN,
-   DIR_STRENGTH_MIN,
-   DIR_DISTANCE_MAX,
-   SMTH_VALID_NBR_MIN,
-   VORT_VALID_NBR_MIN,
-   HIGHCURV_VORTICITY_MIN,
-   HIGHCURV_CURVATURE_MIN,
-   MIN_INTERPOLATE_NBRS,
-   PERCENTILE_MIN_MAX,
-   MIN_CONTRAST_DELTA,
-
-   /* DFT Controls */
-   NUM_DFT_WAVES,
-   POWMAX_MIN,
-   POWNORM_MIN,
-   POWMAX_MAX,
-   FORK_INTERVAL,
-   FORK_PCT_POWMAX,
-   FORK_PCT_POWNORM,
-
-   /* Binarization Controls */
-   DIRBIN_GRID_W,
-   DIRBIN_GRID_H,
-   UNUSED_INT,          /* isobin_grid_dim */
-   NUM_FILL_HOLES,
-
-   /* Minutiae Detection Controls */
-   MAX_MINUTIA_DELTA,
-   MAX_HIGH_CURVE_THETA,
-   HIGH_CURVE_HALF_CONTOUR,
-   MIN_LOOP_LEN,
-   MIN_LOOP_ASPECT_DIST,
-   MIN_LOOP_ASPECT_RATIO,
-
-   /* Minutiae Link Controls */
-   UNUSED_INT,          /* link_table_dim     */
-   UNUSED_INT,          /* max_link_dist      */
-   UNUSED_INT,          /* min_theta_dist     */
-   MAXTRANS,            /* used for removing overlaps as well */
-   UNUSED_DBL,          /* score_theta_norm   */
-   UNUSED_DBL,          /* score_dist_norm    */
-   UNUSED_DBL,          /* score_dist_weight  */
-   UNUSED_DBL,          /* score_numerator    */
-
-   /* False Minutiae Removal Controls */
-   MAX_RMTEST_DIST_V2,
-   MAX_HOOK_LEN_V2,
-   MAX_HALF_LOOP_V2,
-   TRANS_DIR_PIX_V2,
-   SMALL_LOOP_LEN,
-   SIDE_HALF_CONTOUR,
-   INV_BLOCK_MARGIN_V2,
-   RM_VALID_NBR_MIN,
-   MAX_OVERLAP_DIST,
-   MAX_OVERLAP_JOIN_DIST,
-   MALFORMATION_STEPS_1,
-   MALFORMATION_STEPS_2,
-   MIN_MALFORMATION_RATIO,
-   MAX_MALFORMATION_DIST,
-   PORES_TRANS_R,
-   PORES_PERP_STEPS,
-   PORES_STEPS_FWD,
-   PORES_STEPS_BWD,
-   PORES_MIN_DIST2,
-   PORES_MAX_RATIO,
-
-   /* Ridge Counting Controls */
-   MAX_NBRS,
-   MAX_RIDGE_STEPS
-  };
   $1 = &lfsparms_V2;
-//TODO: enhance                  const LFSPARMS *lfsparms)                         &lfsparms_V2)))
 }
 %typemap(argout) (LFSPARMS *){
   printf("Returning LFSPARMS\n");
@@ -190,40 +108,9 @@
 
 %{
 #include "lfs.h"
-/*Declare undeclared ext functions*/
-int  sort_minutiae(MINUTIAE * minutiae, const int iw, const int ih){
-  return sort_minutiae_x_y(minutiae, iw, ih);
-}
-int drawimap(int *imap, const int mw, const int mh, unsigned char *idata, const int iw, const int ih, const ROTGRIDS *dftgrids, const int draw_pixel){
-  return drawmap(imap, mw, mh, idata, iw, ih, dftgrids, draw_pixel);
-}
-void drawimap2(int *imap, const int *blkoffs, const int mw, const int mh, unsigned char *pdata, const int pw, const int ph, const double start_angle, const int ndirs, const int blocksize){
-  drawmap2(imap, blkoffs, mw, mh, pdata, pw, ph, start_angle, ndirs, blocksize);
-}
-
-int bresenham_line_points(int ** a, int ** b, int * c, const int d, const int e, const int f, const int g){return 0;}
 %}
 
-
-%include "lfs.h"
-//%include "bozorth.h"
-
 %inline %{
-  //#include "lfs.h"
-  #include "bozorth.h"
-  int m1_xyt                  = 0;
-
-  int max_minutiae            = DEFAULT_BOZORTH_MINUTIAE;
-  int min_computable_minutiae = MIN_COMPUTABLE_BOZORTH_MINUTIAE;
-
-  int verbose_main      = 0;
-  int verbose_load      = 0;
-  int verbose_bozorth   = 0;
-  int verbose_threshold = 0;
-
-  FILE * errorfp            = FPNULL;
-  #undef PARALLEL_SEARCH
-
   struct xyt_struct * get_XYT(const int reptype, unsigned char *idata, const int iw, const int ih, const int id, const double ippmm){
     /* Get xyt from raw image by uniting get_minutiae and code from bz_load*/
     int i, ox, oy, ot, oq;
@@ -278,3 +165,10 @@ int bresenham_line_points(int ** a, int ** b, int * c, const int d, const int e,
   }
 %}
 
+/*Ignore undeclared ext functions*/
+%ignore sort_minutiae(MINUTIAE * minutiae, const int iw, const int ih);
+%ignore drawimap(int *imap, const int mw, const int mh, unsigned char *idata, const int iw, const int ih, const ROTGRIDS *dftgrids, const int draw_pixel);
+%ignore drawimap2(int *imap, const int *blkoffs, const int mw, const int mh, unsigned char *pdata, const int pw, const int ph, const double start_angle, const int ndirs, const int blocksize);
+%ignore bresenham_line_points(int ** a, int ** b, int * c, const int d, const int e, const int f, const int g);
+
+%include "lfs.h"
