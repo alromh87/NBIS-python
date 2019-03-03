@@ -10,8 +10,7 @@
 
 %typemap(in) MINUTIAE *{
   printf("Generate back minutiae");
-//  $1 = (MINUTIAE *)PyString_AsString($input);
-  $1 = (MINUTIAE *)$input;
+  $1 = (MINUTIAE *)PyString_AsString($input);
   printf("\nLoading %d minutia using %d adress space...\n", (*$1).num, (*$1).alloc);
 
   FILE *fp;
@@ -27,7 +26,6 @@
     minutia = $1->list[i];
     printf("Minutia %d, %4d%4d%4d%4f\n", i, minutia->x, minutia->y, minutia->direction, minutia->reliability);
   }
-  printf("\nGo\n\n");
 }
 %typemap(argout) MINUTIAE * {
   printf("\nDone\n\n");
@@ -39,8 +37,7 @@
 }
 %typemap(argout) MINUTIAE ** {
   printf("\nReturning %d minutia using %d adress space...\n%ld\n", (**$1).num, (**$1).alloc, (**$1).num*sizeof(MINUTIAE));
-  $result = SWIG_Python_AppendOutput(resultobj, (*$1));
-//  $result = SWIG_Python_AppendOutput(resultobj, PyString_FromStringAndSize((const char*)(*$1), (**$1).alloc));
+  $result = SWIG_Python_AppendOutput(resultobj, PyString_FromStringAndSize((const char*)(*$1), (**$1).alloc));
 
   FILE *fp;
   if((fp = fopen("out/minutiaeBefore.bin", "wb")) == (FILE *)NULL){
@@ -57,7 +54,6 @@
   }
 
 //  free_minutiae(*$1);
- printf ("Returning minutiae end");
 }
 
 %typemap(out) (struct xyt_struct *){

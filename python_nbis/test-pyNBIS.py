@@ -14,7 +14,7 @@ from subprocess import call
 debug = 1
 
 huella_raw ="fingerprint.raw"
-huella2_raw ="fingerprintNo.raw"
+huella2_raw ="fingerprint.raw"
 with open(huella_raw, "rb") as image_file:
   huella = image_file.read()
 
@@ -59,19 +59,16 @@ with open(huella_raw, "rb") as image_file:
   print "\n\nTesting MINDTCT"
   #Note: We don't need to use WSQ to extract minutiae!!
 
-  probarBozorth=True
-  if not probarBozorth:
-    salida = lfs.get_minutiae(huella, w, h, depth, ppi)
-    lfs.write_minutiae_XYTQ("out/testMINDTCTpy.xyt", lfs.NIST_INTERNAL_XYT_REP, salida[1], w, h)
-    lfs.free_minutiae(salida[1])
-    #TODO: Run OS mintct and compare output
+  salida = lfs.get_minutiae(huella, w, h, depth, ppi)
+  lfs.write_minutiae_XYTQ("out/testMINDTCTpy.xyt", lfs.NIST_INTERNAL_XYT_REP, salida[1], w, h)
+#  lfs.free_minutiae(salida[1])
+    #TODO: Run OS mindtct and compare output
 
+  print "\n\nTesting BOZORTH"
+  xyt1 = lfs.get_XYT(lfs.NIST_INTERNAL_XYT_REP, huella, w, h, depth, ppi)
+  xyt2 = lfs.get_XYT(lfs.NIST_INTERNAL_XYT_REP, huella2, w, h, depth, ppi)
 
-  else:
-    print "\n\nTesting BOZORTH"
-    xyt1 = lfs.get_XYT(lfs.NIST_INTERNAL_XYT_REP, huella, w, h, depth, ppi)
-    xyt2 = lfs.get_XYT(lfs.NIST_INTERNAL_XYT_REP, huella2, w, h, depth, ppi)
+  [match, xyt1, xyt2] = bozorth.bozorth_main(xyt1, xyt2)
+  #TODO: Run OS bozorth and compare output
 
-    [match, xyt1, xyt2] = bozorth.bozorth_main(xyt1, xyt2)
-
-    print "Match:", match
+  print "Match:", match
