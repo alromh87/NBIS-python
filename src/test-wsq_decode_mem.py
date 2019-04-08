@@ -3,7 +3,7 @@
 from __future__ import unicode_literals
 
 import os
-import wsq
+from pyNBIS import wsq
 
 from PIL import Image
 

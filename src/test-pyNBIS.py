@@ -3,10 +3,10 @@
 from __future__ import unicode_literals
 
 import array
-import wsq
-import nfiq
-import bozorth
-import lfs
+from pyNBIS import wsq
+from pyNBIS import nfiq
+from pyNBIS import bozorth
+from pyNBIS import lfs
 
 from PIL import Image
 
