@@ -1,7 +1,7 @@
 *.o
-*/bin/
-*/lib/
-*/obj/
+**/bin/
+**/lib/
+**/obj/
 python_nbis/build/
 python_nbis/dist/
 python_nbis/*_wrap.c
