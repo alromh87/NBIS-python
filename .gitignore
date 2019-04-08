@@ -1,7 +1,7 @@
 *.o
-**/bin/
-**/lib/
-**/obj/
+bin/
+lib/
+obj/
 python_nbis/build/
 python_nbis/dist/
 python_nbis/*_wrap.c
@@ -10,3 +10,16 @@ python_nbis/*.pyc
 rules.mak
 p_rules.mak
 *egg*
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Distribution / packaging
+build/
+install_dir/
