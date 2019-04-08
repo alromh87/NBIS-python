@@ -1,5 +1,8 @@
 /* lfs.i */
 %module lfs
+%begin %{
+#define SWIG_PYTHON_STRICT_BYTE_CHAR
+%}
 %include "bz_comon.i"
 
 %apply int *OUTPUT { int * };
@@ -37,7 +40,7 @@
 }
 %typemap(argout) MINUTIAE ** {
   printf("\nReturning %d minutia using %d adress space...\n%ld\n", (**$1).num, (**$1).alloc, (**$1).num*sizeof(MINUTIAE));
-  $result = SWIG_Python_AppendOutput(resultobj, PyString_FromStringAndSize((const char*)(*$1), (**$1).alloc));
+  $result = SWIG_Python_AppendOutput(resultobj, PyBytes_FromStringAndSize((const char*)(*$1), (**$1).alloc));
 
   FILE *fp;
   if((fp = fopen("out/minutiaeBefore.bin", "wb")) == (FILE *)NULL){
@@ -78,7 +81,7 @@
   $1 = &oIntP;
 }
 %typemap(argout) (int **){
-//  $result = SWIG_Python_AppendOutput(resultobj, PyString_FromStringAndSize((const char*)(*$1), *$2));
+//  $result = SWIG_Python_AppendOutput(resultobj, PyBytes_FromStringAndSize((const char*)(*$1), *$2));
 }
 %typemap(in,numinputs=0) int * (int oInt){
   $1 = &oInt;
@@ -91,7 +94,7 @@
 }
 %typemap(argout) (unsigned char **){
   printf("Returning char **");
-//  $result = SWIG_Python_AppendOutput(resultobj, PyString_FromStringAndSize((const char*)(*$1), *$2));
+//  $result = SWIG_Python_AppendOutput(resultobj, PyBytes_FromStringAndSize((const char*)(*$1), *$2));
 }
 
 %typemap(in,numinputs=0) LFSPARMS *{
@@ -99,7 +102,7 @@
 }
 %typemap(argout) (LFSPARMS *){
   printf("Returning LFSPARMS\n");
-//  $result = SWIG_Python_AppendOutput(resultobj, PyString_FromStringAndSize((const char*)(*$1), *$2));
+//  $result = SWIG_Python_AppendOutput(resultobj, PyBytes_FromStringAndSize((const char*)(*$1), *$2));
 }
 
 %{

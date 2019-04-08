@@ -1,5 +1,8 @@
 /* nfiq.i */
 %module nfiq
+%begin %{
+#define SWIG_PYTHON_STRICT_BYTE_CHAR
+%}
 %include "typemaps.i"
 
 %apply int *OUTPUT { int * };
