@@ -1,5 +1,8 @@
 /* wsq.i */
 %module wsq
+%begin %{
+#define SWIG_PYTHON_STRICT_BYTE_CHAR
+%}
 %include "typemaps.i"
 
 %apply char* {unsigned char*};
@@ -7,7 +10,7 @@
 %typemap(in) unsigned char* = char*;
 
 %typemap(in,numinputs=0) (unsigned char **, int *)(unsigned char *odata, int * olen){
-  $1 = &odata;
+  $1 = (unsigned char **)&odata;
   $2 = (int *)&olen;
 }
 %typemap(argout) (unsigned char **, int *){
@@ -16,7 +19,7 @@
 }
 
 %typemap(in,numinputs=0) (unsigned char **, int *, int *, int *, int *, int *)(unsigned char *odata, int *ow, int *oh, int *od, int *oppi, int *loosyflag){
-  $1 = &odata;
+  $1 = (unsigned char **)&odata;
   $2 = (int *)&ow;
   $3 = (int *)&oh;
   $4 = (int *)&od;

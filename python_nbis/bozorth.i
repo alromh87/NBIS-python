@@ -1,5 +1,8 @@
 /* bozorth.i */
 %module bozorth
+%begin %{
+#define SWIG_PYTHON_STRICT_BYTE_CHAR
+%}
 %include "typemaps.i"
 %include "bz_comon.i"
 
@@ -21,9 +24,9 @@
     int i;
     for(i = 0; i < xyt_s.nrows; i++){
       dict = PyList_GetItem($input, (Py_ssize_t)i);
-      xyt_s.xcol[i]	= PyDict_Contains(dict, llaveX) ? (int)PyInt_AS_LONG(PyDict_GetItem(dict, llaveX)) : 0;
-      xyt_s.ycol[i]	= PyDict_Contains(dict, llaveX) ? (int)PyInt_AS_LONG(PyDict_GetItem(dict, llaveY)) : 0;
-      xyt_s.thetacol[i]	= PyDict_Contains(dict, llaveX) ? (int)PyInt_AS_LONG(PyDict_GetItem(dict, llaveT)) : 0;
+      xyt_s.xcol[i]	= PyDict_Contains(dict, llaveX) ? (int)PyInt_AsLong(PyDict_GetItem(dict, llaveX)) : 0;
+      xyt_s.ycol[i]	= PyDict_Contains(dict, llaveX) ? (int)PyInt_AsLong(PyDict_GetItem(dict, llaveY)) : 0;
+      xyt_s.thetacol[i]	= PyDict_Contains(dict, llaveX) ? (int)PyInt_AsLong(PyDict_GetItem(dict, llaveT)) : 0;
     }
   }else{
     printf("Bozorth: Received invalid object to build xyt_struct");
