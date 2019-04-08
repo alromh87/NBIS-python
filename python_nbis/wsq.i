@@ -8,7 +8,7 @@
 
 %typemap(in,numinputs=0) (unsigned char **, int *)(unsigned char *odata, int * olen){
   $1 = &odata;
-  $2 = &olen;
+  $2 = (int *)&olen;
 }
 %typemap(argout) (unsigned char **, int *){
   $result = SWIG_Python_AppendOutput(resultobj, SWIG_From_int((*$2)));
@@ -17,11 +17,11 @@
 
 %typemap(in,numinputs=0) (unsigned char **, int *, int *, int *, int *, int *)(unsigned char *odata, int *ow, int *oh, int *od, int *oppi, int *loosyflag){
   $1 = &odata;
-  $2 = &ow;
-  $3 = &oh;
-  $4 = &od;
-  $5 = &oppi;
-  $6 = &loosyflag;
+  $2 = (int *)&ow;
+  $3 = (int *)&oh;
+  $4 = (int *)&od;
+  $5 = (int *)&oppi;
+  $6 = (int *)&loosyflag;
 }
 %typemap(argout) (unsigned char **, int *, int *, int *, int *, int *){
   $result = SWIG_Python_AppendOutput(resultobj, SWIG_From_int((*$6)));
