@@ -16,12 +16,15 @@
   $1 = (MINUTIAE *)PyString_AsString($input);
   printf("\nLoading %d minutia using %d adress space...\n", (*$1).num, (*$1).alloc);
 
+  /*
+  // TODO: Is this really necessary? If it's allow a way to specify temporary dir
   FILE *fp;
   if((fp = fopen("out/minutiaeAfter.bin", "wb")) == (FILE *)NULL){
      fprintf(stderr, "ERROR : write_minutiae_XYTQ : fopen : \n");
   }
   fwrite($1, 1, $1->alloc, fp);
   fclose(fp);
+  */
 
   int i;
   MINUTIA *minutia;
@@ -42,12 +45,15 @@
   printf("\nReturning %d minutia using %d adress space...\n%ld\n", (**$1).num, (**$1).alloc, (**$1).num*sizeof(MINUTIAE));
   $result = SWIG_Python_AppendOutput(resultobj, PyBytes_FromStringAndSize((const char*)(*$1), (**$1).alloc));
 
+  /*
+  // TODO: Is this really necessary? If it's allow a way to specify temporary dir
   FILE *fp;
   if((fp = fopen("out/minutiaeBefore.bin", "wb")) == (FILE *)NULL){
      fprintf(stderr, "ERROR : write_minutiae_XYTQ : fopen : \n");
   }
   fwrite((*$1), 1, (**$1).alloc, fp);
   fclose(fp);
+  */
 
   int i;
   MINUTIA *minutia;
