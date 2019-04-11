@@ -1,4 +1,4 @@
-NBIS_INSTALL_DIR=$(realpath ../install_dir)
+NBIS_INSTALL_DIR=$(realpath ./install_dir)
 
 ifeq ("$(shell arch)", "x86_64")
   HOST_ARCH=--64
@@ -6,7 +6,8 @@ else
   HOST_ARCH=--32
 endif
 
-all:
+all: build test
+build: NBIS
 	python setup.py build
 install:
 	python setup.py install --record installedFiles.txt
@@ -20,5 +21,8 @@ NBIS:
 	ls $(NBIS_INSTALL_DIR)
 clean:
 	rm -r *.c *.so *.pyc dist build *.egg-info/ nfiq.py wsq.py lfs.py bozorth.py
-#//	rm *.py // este no!!!
+# TODO: Tune clean process
+
+test: build
+	python setup.py test
 
