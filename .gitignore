@@ -26,3 +26,7 @@ venv.bak/
 # Distribution / packaging
 build/
 install_dir/
+
+tests/nistFinger_500_500*
+tests/testMINDTCT*
+
