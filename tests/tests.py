@@ -50,26 +50,6 @@ if debug:
         INSTALL_DIR + "bin/nfiq",
         "-d", huella_raw, "-raw", "%d,%d,%d" % (w, h, depth))
 
-
-print("\n\nTesting WSQ codification:")
-result = wsq.wsq_encode_mem(bitrate, huella, w, h, depth, ppi, b"")
-print(result[:2])
-huella_fname, _ = os.path.splitext(huella_raw)
-with open(os.path.join(BASE_DIR, huella_fname + ".py.wsq"), "wb") as raw_file:
-    raw_file.write(result[2])
-call([
-    INSTALL_DIR + "bin/cwsq",
-    "%f" % bitrate, "cwsq.wsq", huella_raw,
-    "-raw_in", "%d,%d,%d,%d" % (w, h, depth, ppi), "/dev/null"])
-# TODO: Compare MD5 Sum and output https://stackoverflow.com/questions/3431825/generating-an-md5-checksum-of-a-file
-
-if debug:
-    print("Debug -> executing WSQ")
-    print(
-        INSTALL_DIR + "bin/cwsq",
-        "%f" % bitrate, "cwsq.wsq", huella_raw,
-        "-raw_in", "%d,%d,%d,%d" % (w, h, depth, ppi), "/dev/null")
-
 print("\n\nTesting MINDTCT")
 # Note: We don't need to use WSQ to extract minutiae!!
 
