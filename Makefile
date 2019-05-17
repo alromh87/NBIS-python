@@ -1,4 +1,4 @@
-NBIS_INSTALL_DIR=$(realpath ./install_dir)
+NBIS_INSTALL_DIR=$(realpath .)/install_dir
 
 ifeq ("$(shell arch)", "x86_64")
   HOST_ARCH=--64
@@ -14,14 +14,16 @@ install:
 uninstall:
 	cat installedFiles.txt | xargs rm -rf
 NBIS:
-	mkdir -p ../install_dir
+	mkdir -p $(NBIS_INSTALL_DIR)
 	cd ./nbis/; ./setup.sh $(NBIS_INSTALL_DIR) $(HOST_ARCH); make config;	make it;	make install LIBNBIS=no
 
 	@echo $(NBIS_INSTALL_DIR)
 	ls $(NBIS_INSTALL_DIR)
 clean:
-	rm -r *.c *.so *.pyc dist build *.egg-info/ nfiq.py wsq.py lfs.py bozorth.py
-# TODO: Tune clean process
+	# make -C nbis clean  # No need to clean this, we won't be modifying it
+	make -C pyNBIS clean
+	make -C tests clean
+	rm -rf *.so .eggs/ *.egg-info/ installedFiles.txt build/ $(NBIS_INSTALL_DIR)/
 
 test: build
 	python setup.py test
