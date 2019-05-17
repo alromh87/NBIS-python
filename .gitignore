@@ -1,12 +1,39 @@
 *.o
-*/bin/
-*/lib/
-*/obj/
-python_nbis/build/
-python_nbis/dist/
-python_nbis/*_wrap.c
-python_nbis/installedFiles.txt
-python_nbis/*.pyc
+bin/
+lib/
+obj/
 rules.mak
 p_rules.mak
 *egg*
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Distribution / packaging
+build/
+install_dir/
+
+tests/nistFinger_500_500*
+tests/testMINDTCT*
+
+pyNBIS/*.py
+pyNBIS/*_wrap.c
+
+installedFiles.txt
+
+# what happens on nbis/, stays on nbis/
+nbis/
