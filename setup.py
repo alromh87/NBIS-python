@@ -6,26 +6,27 @@ setup.py file for NBIS SWIG wrapper
 
 from setuptools import setup, find_packages, Extension
 
+NBIS_SWIG_DIR='./pyNBIS/'
 NBIS_DIR='./install_dir/'
 NBIS_INCLUDE_DIR=NBIS_DIR+'include/'
 NBIS_LIB_DIR=NBIS_DIR+'lib/'
 
-wsq_module = Extension('_wsq', ['pyNBIS/wsq.i'], swig_opts=['-I'+NBIS_INCLUDE_DIR],
+wsq_module = Extension('_wsq', [NBIS_SWIG_DIR + 'wsq.i'], swig_opts=['-I'+NBIS_INCLUDE_DIR],
                       include_dirs=[NBIS_INCLUDE_DIR],
                       library_dirs=[NBIS_LIB_DIR],
                       libraries=['wsq', 'ioutil', 'fet', 'jpegl', 'util'],
                       )
-nfiq_module = Extension('_nfiq', ['pyNBIS/nfiq.i'], swig_opts=['-I'+NBIS_INCLUDE_DIR],
+nfiq_module = Extension('_nfiq', [NBIS_SWIG_DIR + 'nfiq.i'], swig_opts=['-I'+NBIS_INCLUDE_DIR],
                       include_dirs=[NBIS_INCLUDE_DIR],
                       library_dirs=[NBIS_LIB_DIR],
                       libraries=['nfiq', 'mindtct', 'mlp', 'cblas', 'ioutil', 'util'],
                       )
-lfs_module = Extension('_lfs', ['pyNBIS/lfs.i'], swig_opts=['-I'+NBIS_INCLUDE_DIR],
+lfs_module = Extension('_lfs', [NBIS_SWIG_DIR + 'lfs.i'], swig_opts=['-I'+NBIS_INCLUDE_DIR],
                       include_dirs=[NBIS_INCLUDE_DIR],
                       library_dirs=[NBIS_LIB_DIR],
                       libraries=['mindtct', 'mlp', 'cblas', 'ioutil', 'util', 'an2k', 'ioutil', 'image', 'util', 'bozorth3'],
                       )
-bozorth_module = Extension('_bozorth', ['pyNBIS/bozorth.i'], swig_opts=['-I'+NBIS_INCLUDE_DIR],
+bozorth_module = Extension('_bozorth', [NBIS_SWIG_DIR + 'bozorth.i'], swig_opts=['-I'+NBIS_INCLUDE_DIR],
                       include_dirs=[NBIS_INCLUDE_DIR],
                       library_dirs=[NBIS_LIB_DIR],
                       libraries=['bozorth3', 'mindtct', 'mlp', 'cblas', 'ioutil', 'util'],
