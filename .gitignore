@@ -30,3 +30,10 @@ install_dir/
 tests/nistFinger_500_500*
 tests/testMINDTCT*
 
+pyNBIS/*.py
+pyNBIS/*_wrap.c
+
+installedFiles.txt
+
+# what happens on nbis/, stays on nbis/
+nbis/
